@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://userlabs.co.nz/sitemap.xml
