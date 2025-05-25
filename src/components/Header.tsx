@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Beaker, Menu, X } from 'lucide-react';
+import { Beaker, Menu, X, Calculator } from 'lucide-react';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -53,6 +53,13 @@ export default function Header() {
               className="text-gray-600 hover:text-gray-900 font-medium"
             >
               Case Studies
+            </Link>
+            <Link 
+              to="/calculator" 
+              className="text-gray-600 hover:text-gray-900 font-medium flex items-center"
+            >
+              <Calculator className="w-4 h-4 mr-1" />
+              ROI Calculator
             </Link>
             <Link 
               to="/contact"
@@ -127,6 +134,14 @@ export default function Header() {
               onClick={() => setIsMenuOpen(false)}
             >
               Case Studies
+            </Link>
+            <Link
+              to="/calculator"
+              className="text-gray-600 hover:text-gray-900 py-2 font-medium flex items-center"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <Calculator className="w-4 h-4 mr-1" />
+              ROI Calculator
             </Link>
             <Link
               to="/contact"
