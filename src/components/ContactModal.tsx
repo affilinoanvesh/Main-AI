@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, Send, CheckCircle } from 'lucide-react';
+import React from 'react';
+import { X, Send } from 'lucide-react';
 import { useForm, ValidationError } from '@formspree/react';
 
 interface ContactModalProps {
@@ -8,50 +8,8 @@ interface ContactModalProps {
   title?: string;
 }
 
-const solutions = [
-  {
-    id: 'automation',
-    label: 'Process Automation',
-    description: 'Automate repetitive tasks and workflows'
-  },
-  {
-    id: 'customer-service',
-    label: 'Customer Service',
-    description: 'AI-powered support and engagement'
-  },
-  {
-    id: 'analytics',
-    label: 'Business Analytics',
-    description: 'Data-driven insights and predictions'
-  },
-  {
-    id: 'scheduling',
-    label: 'Smart Scheduling',
-    description: 'Automated appointment and resource management'
-  },
-  {
-    id: 'inventory',
-    label: 'Inventory Management',
-    description: 'AI-driven stock prediction and optimization'
-  },
-  {
-    id: 'custom',
-    label: 'Custom Solution',
-    description: 'Tell us about your specific needs'
-  }
-];
-
-export default function ContactModal({ isOpen, onClose, title = "What solutions are you looking for?" }: ContactModalProps) {
+export default function ContactModal({ isOpen, onClose, title = "Let's Talk" }: ContactModalProps) {
   const [state, handleSubmit] = useForm("xldgzdaa");
-  const [selectedSolutions, setSelectedSolutions] = useState<string[]>([]);
-
-  const toggleSolution = (id: string) => {
-    setSelectedSolutions(prev => 
-      prev.includes(id) 
-        ? prev.filter(s => s !== id)
-        : [...prev, id]
-    );
-  };
 
   if (!isOpen) return null;
 
@@ -83,7 +41,7 @@ export default function ContactModal({ isOpen, onClose, title = "What solutions 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="fixed inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="relative bg-white rounded-2xl p-8 max-w-md w-full">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
@@ -93,46 +51,10 @@ export default function ContactModal({ isOpen, onClose, title = "What solutions 
 
         <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
         <p className="text-gray-600 mb-6">
-          Select the solutions you're interested in and tell us about your business.
+          Tell us about your business and how AI could help you grow.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4 mb-8">
-          {solutions.map((solution) => (
-            <button
-              key={solution.id}
-              onClick={() => toggleSolution(solution.id)}
-              className={`p-4 rounded-xl border-2 text-left transition-all ${
-                selectedSolutions.includes(solution.id)
-                  ? 'border-primary-600 bg-primary-50'
-                  : 'border-gray-200 hover:border-primary-300'
-              }`}
-            >
-              <div className="flex items-start">
-                <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 mr-3 mt-1 ${
-                  selectedSolutions.includes(solution.id)
-                    ? 'border-primary-600 bg-primary-600'
-                    : 'border-gray-300'
-                }`}>
-                  {selectedSolutions.includes(solution.id) && (
-                    <CheckCircle className="w-4 h-4 text-white" />
-                  )}
-                </div>
-                <div>
-                  <h3 className="font-medium text-gray-900">{solution.label}</h3>
-                  <p className="text-sm text-gray-500">{solution.description}</p>
-                </div>
-              </div>
-            </button>
-          ))}
-        </div>
-
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="hidden"
-            name="solutions"
-            value={selectedSolutions.join(', ')}
-          />
-
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
               Name
@@ -176,7 +98,7 @@ export default function ContactModal({ isOpen, onClose, title = "What solutions 
 
           <div>
             <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-              Tell us more about your needs
+              How can we help?
             </label>
             <textarea
               id="message"
@@ -184,7 +106,6 @@ export default function ContactModal({ isOpen, onClose, title = "What solutions 
               required
               rows={4}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              placeholder="What specific challenges are you looking to solve?"
             />
             <ValidationError prefix="Message" field="message" errors={state.errors} />
           </div>
