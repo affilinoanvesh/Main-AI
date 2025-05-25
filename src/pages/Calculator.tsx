@@ -73,31 +73,52 @@ function Calculator() {
     tooltip: string;
     prefix?: string;
     suffix?: string;
-  }) => (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <label className="text-white text-lg">{label}</label>
-        <div className="flex items-center gap-2">
-          <span className="text-primary-400 font-bold text-lg">
-            {prefix}{value}{suffix}
-          </span>
-          <Tooltip text={tooltip} />
+  }) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = Math.min(Math.max(Number(e.target.value), min), max);
+      onChange(newValue);
+    };
+
+    const percentage = ((value - min) / (max - min)) * 100;
+
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <label className="text-white text-lg">{label}</label>
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              value={value}
+              onChange={handleInputChange}
+              min={min}
+              max={max}
+              className="w-20 bg-gray-800 text-primary-400 font-bold text-lg rounded-lg px-2 py-1 text-right"
+            />
+            <span className="text-primary-400 font-bold">{suffix}</span>
+            <Tooltip text={tooltip} />
+          </div>
+        </div>
+        <div className="relative">
+          <div className="absolute inset-0 h-2 bg-gray-700 rounded-lg">
+            <div 
+              className="h-full bg-primary-400 rounded-lg transition-all duration-150"
+              style={{ width: `${percentage}%` }}
+            />
+          </div>
+          <input
+            type="range"
+            min={min}
+            max={max}
+            value={value}
+            onChange={handleInputChange}
+            className="w-full h-2 absolute inset-0 opacity-0 cursor-pointer"
+          />
+          <div className="absolute -bottom-6 left-0 text-xs text-gray-400">{prefix}{min}{suffix}</div>
+          <div className="absolute -bottom-6 right-0 text-xs text-gray-400">{prefix}{max}{suffix}</div>
         </div>
       </div>
-      <div className="relative">
-        <input
-          type="range"
-          min={min}
-          max={max}
-          value={value}
-          onChange={(e) => onChange(Number(e.target.value))}
-          className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-400"
-        />
-        <div className="absolute -bottom-6 left-0 text-xs text-gray-400">{prefix}{min}{suffix}</div>
-        <div className="absolute -bottom-6 right-0 text-xs text-gray-400">{prefix}{max}{suffix}</div>
-      </div>
-    </div>
-  );
+    );
+  };
 
   const MetricCard = ({ 
     title, 
