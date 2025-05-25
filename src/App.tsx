@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageSquare, Brain, Clock, Wrench, ChevronRight, Code, Settings, Users, Star, ArrowRight, Award, Building2, Quote } from 'lucide-react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import SEO from './components/SEO';
+import ContactModal from './components/ContactModal';
 import { caseStudies } from './data/caseStudies';
 
 function App() {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
       <SEO 
@@ -17,6 +20,11 @@ function App() {
       />
       <ScrollToTop />
       <Header />
+
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
 
       <main id="main-content">
         {/* Hero Section */}
@@ -29,13 +37,13 @@ function App() {
               I create personalized AI solutions that actually fit your business needs. 
               As a fellow small business owner, I understand the importance of getting it right.
             </p>
-            <Link
-              to="/contact"
+            <button
+              onClick={() => setIsContactModalOpen(true)}
               className="bg-primary-600 text-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-primary-700 transition-colors inline-flex items-center"
             >
               Start Your AI Journey
               <ChevronRight className="ml-2 w-5 h-5" />
-            </Link>
+            </button>
           </div>
         </section>
 
@@ -161,13 +169,13 @@ function App() {
                 Let's discuss how custom AI solutions can help your business grow, save time, and improve customer satisfaction.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link
-                  to="/contact"
+                <button
+                  onClick={() => setIsContactModalOpen(true)}
                   className="bg-white text-primary-600 px-8 py-3 rounded-lg text-lg font-medium hover:bg-primary-50 transition-colors inline-flex items-center"
                 >
                   Start Your Journey
                   <ChevronRight className="ml-2 w-5 h-5" />
-                </Link>
+                </button>
                 <Link
                   to="/case-studies"
                   className="text-white border-2 border-white px-8 py-3 rounded-lg text-lg font-medium hover:bg-primary-700 transition-colors inline-flex items-center"
